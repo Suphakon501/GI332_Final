@@ -1,9 +1,9 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Unity.Netcode; // 1. เพิ่ม namespace นี้
+using Unity.Netcode; // 1. ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ namespace ๏ฟฝ๏ฟฝ๏ฟฝ
 
 [RequireComponent(typeof(Rigidbody))]
-public class SubmarineController : NetworkBehaviour // 2. เปลี่ยนเป็น NetworkBehaviour
+public class SubmarineController : NetworkBehaviour // 2. ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝยน๏ฟฝ๏ฟฝ NetworkBehaviour
 {
     [Header("Movement")]
     [SerializeField] private float moveSpeed = 15f;
@@ -30,17 +30,17 @@ public class SubmarineController : NetworkBehaviour // 2. เปลี่ยนเป็น NetworkBeh
         inputActions = new PlayerInputActions();
 
         rb.useGravity = false;
-        rb.drag = 1.5f;
-        rb.angularDrag = 2.5f;
+        rb.linearDamping = 1.5f;
+        rb.angularDamping = 2.5f;
     }
 
     private void OnEnable()
     {
-        // 3. สำคัญมาก: ถ้าไม่ใช่เจ้าของ (IsOwner) ไม่ต้องเปิดใช้งาน Input
-        // เพื่อไม่ให้เครื่องเราไปรับ Input แล้วสั่งตัวละครคนอื่น
+        // 3. ๏ฟฝำคัญ๏ฟฝาก: ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝาของ (IsOwner) ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝอง๏ฟฝิด๏ฟฝ๏ฟฝาน Input
+        // ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝอง๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝับ Input ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ่งต๏ฟฝ๏ฟฝ๏ฟฝะครค๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
     }
 
-    // ใช้ OnNetworkSpawn แทน OnEnable สำหรับการ Setup ของ Netcode
+    // ๏ฟฝ๏ฟฝ OnNetworkSpawn แทน OnEnable ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝับ๏ฟฝ๏ฟฝ๏ฟฝ Setup ๏ฟฝอง Netcode
     public override void OnNetworkSpawn()
     {
         if (IsOwner)
@@ -74,7 +74,7 @@ public class SubmarineController : NetworkBehaviour // 2. เปลี่ยนเป็น NetworkBeh
 
     private void Update()
     {
-        // 4. ถ้าไม่ใช่เจ้าของ ไม่ต้องคำนวณ Rotation หรือ Input ในเครื่องนี้
+        // 4. ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝาของ ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝอง๏ฟฝำนวณ Rotation ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ Input ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝอง๏ฟฝ๏ฟฝ๏ฟฝ
         if (!IsOwner) return;
 
         rotationY += lookInput.x * mouseSensitivity;
@@ -92,7 +92,7 @@ public class SubmarineController : NetworkBehaviour // 2. เปลี่ยนเป็น NetworkBeh
 
     private void FixedUpdate()
     {
-        // 5. ถ้าไม่ใช่เจ้าของ ไม่ต้องใส่แรง (Force) ให้ตัวละคร
+        // 5. ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝาของ ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝอง๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝรง (Force) ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝะค๏ฟฝ
         if (!IsOwner) return;
 
         Vector3 moveDir =
