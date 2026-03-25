@@ -3,18 +3,23 @@ using UnityEngine;
 
 public class ConnectionButtons : MonoBehaviour
 {
-    public GameObject connectionCanvas;
+    public GameObject menuUI;
+    public GameObject gameUI;
 
     public void StartHost()
     {
         NetworkManager.Singleton.StartHost();
-        connectionCanvas.SetActive(false);
+
+        menuUI.SetActive(false);
+        gameUI.SetActive(true);
     }
 
     public void StartClient()
     {
         NetworkManager.Singleton.StartClient();
-        connectionCanvas.SetActive(false);
+
+        menuUI.SetActive(false);
+        gameUI.SetActive(true);
     }
 
 }

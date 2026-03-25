@@ -1,24 +1,29 @@
-using UnityEngine;
 using Unity.Netcode;
-using Unity.Cinemachine; // ถ้าใช้ Cinemachine version ใหม่ (Unity 6+) ให้ใช้ Unity.Cinemachine
-// using Cinemachine; // ถ้าใช้ Cinemachine version เก่า ให้ใช้ namespace นี้แทน
+using UnityEngine;
+using Unity.Cinemachine;
 
 public class SetupCamera : NetworkBehaviour
 {
     public override void OnNetworkSpawn()
     {
-        // ถ้าเป็นตัวละครของเราเอง
-        if (IsOwner)
-        {
-            // ค้นหา Virtual Camera ในฉาก
-            var vcam = GameObject.FindAnyObjectByType<CinemachineCamera>();
+        if (!IsOwner) return;
 
-            if (vcam != null)
-            {
-                // สั่งให้กล้อง Focus และ Follow มาที่เรือลำนี้
-                vcam.Follow = transform;
-                vcam.LookAt = transform;
-            }
+        StartCoroutine(SetupCam());
+    }
+
+    private System.Collections.IEnumerator SetupCam()
+    {
+        CinemachineCamera vcam = null;
+
+        while (vcam == null)
+        {
+            vcam = GameObject.FindAnyObjectByType<CinemachineCamera>();
+            yield return null;
         }
+
+        vcam.Follow = transform;
+        vcam.LookAt = transform;
+
+        Debug.Log("Camera set for OWNER: " + OwnerClientId);
     }
 }

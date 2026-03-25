@@ -1,9 +1,9 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Unity.Netcode; // 1. ���� namespace ���
+using Unity.Netcode; 
 
 [RequireComponent(typeof(Rigidbody))]
-public class SubmarineController : NetworkBehaviour // 2. ����¹�� NetworkBehaviour
+public class SubmarineController : NetworkBehaviour 
 {
     [Header("Movement")]
     [SerializeField] private float moveSpeed = 15f;
@@ -36,11 +36,10 @@ public class SubmarineController : NetworkBehaviour // 2. ����¹�� N
 
     private void OnEnable()
     {
-        // 3. �Ӥѭ�ҡ: ����������Ңͧ (IsOwner) ����ͧ�Դ��ҹ Input
-        // ��������������ͧ�����Ѻ Input ������觵���Фä����
+        
     }
 
-    // �� OnNetworkSpawn ᷹ OnEnable ����Ѻ��� Setup �ͧ Netcode
+    
     public override void OnNetworkSpawn()
     {
         if (IsOwner)
